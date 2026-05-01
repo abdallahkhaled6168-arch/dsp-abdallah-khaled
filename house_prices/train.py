@@ -3,10 +3,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error
 import joblib
+from house_prices.preprocess import preprocess_data
 
 def build_model():
     df = pd.read_csv("data/train.csv", sep="\s+")
-    df = df.select_dtypes(include=["int64", "float64"])
+
+    df = preprocess_data(df)
 
     X = df.drop("SalePrice", axis=1)
     y = df["SalePrice"]
