@@ -1,24 +1,27 @@
 import pandas as pd
 import joblib
 
-
-def load_model(path="models/model.joblib"):
-    return joblib.load(path)
-
-
-def load_data(path: str):
-    return pd.read_csv(path)
-
-
 def make_predictions():
-    model = load_model()
-    df = load_data("data/test.csv")
+    df = pd.read_csv("data/test.csv")
+    df.columns = df.columns.str.strip()
 
-    preds = model.predict(df)
+    if "Id" in df.columns:
+        ids = df["Id"]
+        df = df.drop(columns=["Id"])
+    else:
+        ids = range(len(df))
+
+    X = pd.get_dummies(df)
+
+    model = joblib.load("models/model.pkl")
+
+    preds = model.predict(X)
 
     output = pd.DataFrame({
-        "Id": df.index,
+        "Id": ids,
         "SalePrice": preds
     })
 
     output.to_csv("predictions.csv", index=False)
+
+    print("Predictions file created successfully")
