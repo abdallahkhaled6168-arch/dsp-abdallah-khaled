@@ -2,27 +2,31 @@ import pandas as pd
 import joblib
 
 def make_predictions():
-    df = pd.read_csv("data/test.csv", sep="\t")
-    df.columns = df.columns.str.strip()
+    model = joblib.load("models/model.joblib")
 
-    if "Id" in df.columns:
-        ids = df["Id"]
-        df = df.drop(columns=["Id"])
-    else:
-        ids = range(len(df))
+    train_df = pd.read_csv("data/train.csv")
+    test_df = pd.read_csv("data/test.csv")
 
-    X = pd.get_dummies(df)
-    X = X.fillna(0)
+    y = train_df["SalePrice"]
+    train_df = train_df.drop(columns=["SalePrice"])
 
-    model = joblib.load("models/model.pkl")
+    train_df = train_df.drop(columns=["Id"], errors="ignore")
+    test_ids = test_df["Id"]
+    test_df = test_df.drop(columns=["Id"], errors="ignore")
 
-    preds = model.predict(X)
+    train_df = train_df.fillna(0)
+    test_df = test_df.fillna(0)
+
+    train_df = pd.get_dummies(train_df)
+    test_df = pd.get_dummies(test_df)
+
+    test_df = test_df.reindex(columns=train_df.columns, fill_value=0)
+
+    preds = model.predict(test_df)
 
     output = pd.DataFrame({
-        "Id": ids,
+        "Id": test_ids,
         "SalePrice": preds
     })
 
     output.to_csv("predictions.csv", index=False)
-
-    print("Predictions file created successfully")
