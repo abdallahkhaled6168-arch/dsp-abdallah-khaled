@@ -6,10 +6,15 @@ import joblib
 
 def build_model():
     df = pd.read_csv("data/train.csv")
-    df.columns = df.columns.str.strip()
 
-    y = df["SalePrice"]
-    X = df.drop(columns=["SalePrice"])
+    df.columns = df.columns.str.strip()
+    df.columns = df.columns.str.replace("\t", "", regex=False)
+    df.columns = df.columns.str.replace("\n", "", regex=False)
+
+    target_col = [c for c in df.columns if "SalePrice" in c][0]
+
+    y = df[target_col]
+    X = df.drop(columns=[target_col])
 
     X = pd.get_dummies(X)
 
