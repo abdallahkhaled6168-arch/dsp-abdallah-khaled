@@ -5,11 +5,12 @@ from sklearn.metrics import mean_squared_error
 import joblib
 
 def build_model():
-    df = pd.read_csv("data/train.csv")
+    df = pd.read_csv("data/train.csv", sep=",")
 
     df.columns = df.columns.str.strip()
-    df.columns = df.columns.str.replace("\t", "", regex=False)
-    df.columns = df.columns.str.replace("\n", "", regex=False)
+
+    print(df.head())
+    print(df.columns)
 
     target_col = [c for c in df.columns if "SalePrice" in c][0]
 
