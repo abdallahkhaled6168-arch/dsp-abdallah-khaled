@@ -4,9 +4,9 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error
 import joblib
 
-
 def build_model():
-    df = pd.read_csv("data/train.csv")
+    df = pd.read_csv("data/train.csv", sep="\s+")
+    df = df.select_dtypes(include=["int64", "float64"])
 
     X = df.drop("SalePrice", axis=1)
     y = df["SalePrice"]
