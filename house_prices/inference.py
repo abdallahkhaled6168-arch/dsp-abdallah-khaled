@@ -2,7 +2,7 @@ import pandas as pd
 import joblib
 
 def make_predictions():
-    model = joblib.load("models/model.joblib")
+    model = joblib.load("models/model.pkl")
 
     train_df = pd.read_csv("data/train.csv")
     test_df = pd.read_csv("data/test.csv")
