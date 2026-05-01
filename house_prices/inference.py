@@ -2,7 +2,7 @@ import pandas as pd
 import joblib
 
 def make_predictions():
-    df = pd.read_csv("data/test.csv")
+    df = pd.read_csv("data/test.csv", sep="\t")
     df.columns = df.columns.str.strip()
 
     if "Id" in df.columns:
@@ -12,6 +12,7 @@ def make_predictions():
         ids = range(len(df))
 
     X = pd.get_dummies(df)
+    X = X.fillna(0)
 
     model = joblib.load("models/model.pkl")
 
