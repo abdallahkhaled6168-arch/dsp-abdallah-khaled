@@ -1,5 +1,6 @@
 import pandas as pd
 import joblib
+from house_prices.preprocess import preprocess_data
 
 def make_predictions():
     model = joblib.load("models/model.joblib")
@@ -7,7 +8,7 @@ def make_predictions():
     df = pd.read_csv("data/test.csv", sep="\s+")
     ids = df["Id"]
 
-    df = df.select_dtypes(include=["int64", "float64"])
+    df = preprocess_data(df)
 
     if "SalePrice" in df.columns:
         df = df.drop("SalePrice", axis=1)
