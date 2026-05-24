@@ -1,8 +1,8 @@
 # PW2 Evaluation
 
-*Generated: 2026-05-23 17:48*
+*Generated: 2026-05-24 12:54*
 
-**Grade: 1.0/20.0**
+**Grade: 2.5/20.0**
 
 ## Issues
 
@@ -25,7 +25,6 @@ house_prices/train.py:7:1: E302 expected 2 blank lines, found 1
 - make_predictions returns array (TypeError: make_predictions() takes 0 positional arguments but 1 was given)
 - Artifacts saved after training (TypeError: build_model() takes 0 positional arguments but 1 was given)
 - Artifacts loaded in inference (TypeError: make_predictions() takes 0 positional arguments but 1 was given)
-- Final notebook runs (Timeout (>120s))
 - No select_dtypes (Forbidden: house_prices/preprocess.py: select_dtypes)
 - pyproject.toml exists & installable (No pyproject.toml)
 - Error handling for missing files (Expected FileNotFoundError, got TypeError: make_predictions() takes 0 positional arguments but 1 was given)
